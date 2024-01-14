@@ -10,8 +10,8 @@ const ubuntu = Ubuntu({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Dashboard",
-  description: "Next.js Dashboard Template",
+  title: "Canari",
+  description: "Canari Solutions",
 };
 
 export default function RootLayout({

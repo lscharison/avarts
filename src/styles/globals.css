@@ -25,3 +25,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+.grid-line {
+  position: absolute;
+  background-color: #ccc;
+  opacity: 0.5;
+}
