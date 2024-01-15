@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { EditorSidebar } from "./editor-sidebar";
 import { EditorMainArea } from "./editor-main-area";

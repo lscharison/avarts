@@ -1,11 +1,13 @@
+"use client";
 import React from "react";
+import { useWindowSize } from "react-use";
 import MoveableManager from "../moveable-manager";
 
 export const EditorMainArea = () => {
+  const { width, height } = useWindowSize();
   const [targets, setTargets] = React.useState<HTMLElement[]>();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const gridRef = React.useRef<HTMLDivElement>(null);
-
   const updateTarget = (target: HTMLElement[]) => {
     setTargets(target);
   };
@@ -39,7 +41,7 @@ export const EditorMainArea = () => {
       line.style.height = "1px";
       gridContainer.appendChild(line);
     }
-  }, []);
+  }, [width, height]);
 
   return (
     <div
