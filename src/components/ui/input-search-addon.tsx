@@ -26,7 +26,7 @@ export function InputWithSearchAddon({
         containerProps={{
           className: "min-w-0",
         }}
-        crossOrigin={true}
+        crossOrigin={"true"}
         icon={
           <MagnifyingGlassIcon className="absolute left-0 h-4 w-4 text-blue-gray-300" />
         }
