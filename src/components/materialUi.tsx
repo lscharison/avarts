@@ -1,5 +1,5 @@
-'use client';
-import { useMemo, useState } from 'react';
+"use client";
+import { useMemo, useState } from "react";
 import {
   MaterialReactTable,
   // createRow,
@@ -7,7 +7,7 @@ import {
   type MRT_Row,
   type MRT_TableOptions,
   useMaterialReactTable,
-} from 'material-react-table';
+} from "material-react-table";
 import {
   Box,
   Button,
@@ -15,32 +15,32 @@ import {
   IconButton,
   Tooltip,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 
-import { type User, fakeData, usStates } from './makeData';
+// import { type User, fakeData, usStates } from './makeData';
 //import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const EditableTable = () => {
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string | undefined>
   >({});
   //keep track of rows that have been edited
-  const [editedUsers, setEditedUsers] = useState<Record<string, User>>({});
+  const [editedUsers, setEditedUsers] = useState<Record<string, any>>({});
 
-  const columns = useMemo<MRT_ColumnDef<User>[]>(
+  const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
       {
-        accessorKey: 'id',
-        header: 'Id',
+        accessorKey: "id",
+        header: "Id",
         enableEditing: false,
         size: 80,
       },
       {
-        accessorKey: 'firstName',
-        header: 'First Name',
+        accessorKey: "firstName",
+        header: "First Name",
         muiEditTextFieldProps: ({ cell, row }) => ({
-          type: 'text',
+          type: "text",
           required: true,
           error: !!validationErrors?.[cell.id],
           helperText: validationErrors?.[cell.id],
@@ -51,10 +51,10 @@ export const EditableTable = () => {
         }),
       },
       {
-        accessorKey: 'lastName',
-        header: 'Last Name',
+        accessorKey: "lastName",
+        header: "Last Name",
         muiEditTextFieldProps: ({ cell, row }) => ({
-          type: 'text',
+          type: "text",
           required: true,
           error: !!validationErrors?.[cell.id],
           helperText: validationErrors?.[cell.id],
@@ -65,10 +65,10 @@ export const EditableTable = () => {
         }),
       },
       {
-        accessorKey: 'email',
-        header: 'Email',
+        accessorKey: "email",
+        header: "Email",
         muiEditTextFieldProps: ({ cell, row }) => ({
-          type: 'email',
+          type: "email",
           required: true,
           error: !!validationErrors?.[cell.id],
           helperText: validationErrors?.[cell.id],
@@ -79,10 +79,10 @@ export const EditableTable = () => {
         }),
       },
       {
-        accessorKey: 'state',
-        header: 'State',
-        editVariant: 'select',
-        editSelectOptions: usStates,
+        accessorKey: "state",
+        header: "State",
+        editVariant: "select",
+        editSelectOptions: [],
         muiEditTextFieldProps: ({ row }) => ({
           select: true,
           error: !!validationErrors?.state,
@@ -95,12 +95,11 @@ export const EditableTable = () => {
         }),
       },
     ],
-    [editedUsers, validationErrors],
+    [editedUsers, validationErrors]
   );
 
-
   //CREATE action
-  const handleCreateUser: MRT_TableOptions<User>['onCreatingRowSave'] = async ({
+  const handleCreateUser: MRT_TableOptions<any>["onCreatingRowSave"] = async ({
     values,
     table,
   }) => {
@@ -113,26 +112,26 @@ export const EditableTable = () => {
   };
 
   //DELETE action
-  const openDeleteConfirmModal = (row: MRT_Row<User>) => {
-    if (window.confirm('Are you sure you want to delete this row?')) {
+  const openDeleteConfirmModal = (row: MRT_Row<any>) => {
+    if (window.confirm("Are you sure you want to delete this row?")) {
       //deleteUser(row.original.id);
     }
   };
 
   const table = useMaterialReactTable({
     columns,
-    data: fakeData,
-    createDisplayMode: 'row', // ('modal', and 'custom' are also available)
-    editDisplayMode: 'cell', // ('modal', 'row', 'table', and 'custom' are also available)
+    data: [],
+    createDisplayMode: "row", // ('modal', and 'custom' are also available)
+    editDisplayMode: "cell", // ('modal', 'row', 'table', and 'custom' are also available)
     enableEditing: true,
     enableRowActions: true,
-    positionActionsColumn: 'last',
+    positionActionsColumn: "last",
     //getSubRows: (row) => fakeData.filter((r) => r.id === row.id),
     getRowId: (row) => row.id,
     onCreatingRowCancel: () => setValidationErrors({}),
     onCreatingRowSave: handleCreateUser,
     renderRowActions: ({ row }) => (
-      <Box sx={{ display: 'flex', gap: '1rem' }}>
+      <Box sx={{ display: "flex", gap: "1rem" }}>
         <Tooltip title="Delete">
           <IconButton color="error" onClick={() => openDeleteConfirmModal(row)}>
             <DeleteIcon />
@@ -141,7 +140,7 @@ export const EditableTable = () => {
       </Box>
     ),
     renderBottomToolbarCustomActions: () => (
-      <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
         <Button
           color="success"
           variant="contained"
@@ -150,8 +149,7 @@ export const EditableTable = () => {
             Object.keys(editedUsers).length === 0 ||
             Object.values(validationErrors).some((error) => !!error)
           }
-        >
-        </Button>
+        ></Button>
         {Object.values(validationErrors).some((error) => !!error) && (
           <Typography color="error">Fix errors before submitting</Typography>
         )}
@@ -183,6 +181,3 @@ export const EditableTable = () => {
 
   return <MaterialReactTable table={table} />;
 };
-
-
-

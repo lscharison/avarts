@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import InfiniteViewer from "react-infinite-viewer";
-import { IObject } from "@daybrush/utils";
 import Guides from "@scena/react-guides";
 import { EditorSidebar } from "./editor-sidebar";
 import { EditorMainArea } from "./editor-main-area";
@@ -89,6 +88,7 @@ export const EditorGrid = ({ editorState }: EditorGridProps) => {
       className={cn(
         "flex flex-grow border-2 border-solid border-gray-200 bg-[#F9F6EE]"
       )}
+      // @ts-ignore
       ref={canvasRef}
       data-testid="editor-grid2-container"
     >
