@@ -1,6 +1,6 @@
 import { values } from "lodash";
 import { denormalize, normalize, schema } from "normalizr";
-import { WidgetEnum as KWidgetTypes } from "./widgets";
+import { WidgetEnum as KWidgetTypes, WidgetElement } from "./widgets";
 
 export type WidgetElementTypes = {
   id: string;
@@ -16,7 +16,7 @@ export type WidgetImageTypes = {
 
 export type WidgetTypes = {
   id: string;
-  type: KWidgetTypes;
+  type: KWidgetTypes | WidgetElement;
   transformation: {
     x: number;
     y: number;
@@ -25,11 +25,14 @@ export type WidgetTypes = {
   };
   title?: string;
   subtitle?: string;
+  enableElements: boolean;
   captionEnabled: boolean;
   captionSubtitle?: string;
   captionTitle?: string;
   //  images
   images: WidgetImageTypes[];
+  // elements
+  elementType?: WidgetElement;
 };
 
 export type PageTypes = {
@@ -46,6 +49,7 @@ export type DeckInfoTypes = {
   id: string;
   background: string;
   sidebar: string;
+  navbar: string;
   fontFamily: string;
   shadow: string;
   title: string;

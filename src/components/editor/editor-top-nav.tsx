@@ -10,6 +10,11 @@ export const EditorTopNav = () => {
     <div
       className="flex items-center justify-between h-16 border-gray-10 border-[0.5px] border-solid shadow"
       data-tesid="editor-top-nav"
+      style={{
+        ...(deckInfo?.navbar && {
+          background: `${deckInfo?.navbar}`,
+        }),
+      }}
     >
       <InputWithSearchAddon onChange={() => {}} value="Search the deck" />
       <div className="flex text-xs items-center justify-between gap-1">

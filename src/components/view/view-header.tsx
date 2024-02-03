@@ -11,6 +11,11 @@ export const ViewHeader = () => {
     <div
       className="flex items-center justify-between h-16 border-2 border-solid border-gray-200"
       data-tesid="editor-top-nav"
+      style={{
+        ...(deckInfo?.navbar && {
+          background: `${deckInfo?.navbar}`,
+        }),
+      }}
     >
       <InputWithSearchAddon onChange={() => {}} value="Search the deck" />
       <div className="flex text-xs items-center justify-between gap-1">

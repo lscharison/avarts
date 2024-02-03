@@ -17,7 +17,7 @@ export const ViewPage = ({ pageId }: ViewPageProps) => {
     <div className="flex">
       {map(allWidgets, (widget: WidgetTypes) => {
         switch (widget.type) {
-          case WidgetEnum.CARD:
+          case WidgetEnum.FRAME:
             return <CardViewWidget key={widget.id} data={widget} />;
           default:
             return null;
