@@ -30,7 +30,8 @@ export type WidgetTypes = {
   captionSubtitle?: string;
   captionTitle?: string;
   //  images
-  images: WidgetImageTypes[];
+  images?: WidgetImageTypes[];
+  data?: Record<string, any>;
   // elements
   elementType?: WidgetElement;
 };
@@ -136,4 +137,24 @@ export const deNormalizeEditorData = (editorState: EditorStateTypes): any => {
   if (!deckId) throw new Error("Deck id not found");
   const deNormData = denormalize(deckId, editorSchema, entities);
   return deNormData;
+};
+
+export type Agreement = {
+  id?: string;
+  deckId: string;
+  title: string;
+  content?: string;
+  uid: string;
+  email?: string;
+  accepted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  ndaAskFor?: string;
+};
+
+export type User = {
+  email?: string;
+  uid: string;
+  displayName: string;
+  phoneNumber?: string;
 };

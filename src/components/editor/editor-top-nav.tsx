@@ -1,8 +1,8 @@
 import React from "react";
 import { Typography } from "@material-tailwind/react";
-import { CompanyLogo } from "../company-logo";
 import { InputWithSearchAddon } from "../ui/input-search-addon";
 import { useEditorDecksObserveable } from "@/store";
+import { EditorCompanyLogo } from "../company-logo-ui";
 
 export const EditorTopNav = () => {
   const deckInfo = useEditorDecksObserveable();
@@ -38,7 +38,11 @@ export const EditorTopNav = () => {
           {deckInfo?.subtitle || ""}
         </Typography>
       </div>
-      <CompanyLogo inverse={true} variant="h6" iconSize="h-4 w-4" />
+      <EditorCompanyLogo
+        inverse={true}
+        variant="h6"
+        logoUrl={deckInfo?.logo?.url}
+      />
     </div>
   );
 };

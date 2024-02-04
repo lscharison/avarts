@@ -28,15 +28,14 @@ export function CardWidget({ data }: CardWidgetProps) {
 
   console.log("datacurrentwidget", data);
   const transformation = data.transformation;
-  const cardStyles = React.useMemo(() => {
-    return {
+  const cardStyles = React.useMemo(() => ({
+    
       transform: `translate(${transformation.x || 0}px, ${
         transformation.y || 0
       }px)`,
       width: `${transformation.width || 0}px`,
       height: `${transformation.height || 0}px`,
-    };
-  }, [transformation]);
+  }), [transformation]);
 
   const handleOnChange = (e: any) => {};
 

@@ -11,7 +11,6 @@ type ViewPageProps = {
 
 export const ViewPage = ({ pageId }: ViewPageProps) => {
   const allWidgets = useEditorPageWidgetsObserveable(pageId);
-  console.log("all Widgets", allWidgets);
 
   return (
     <div className="flex">

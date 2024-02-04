@@ -71,6 +71,7 @@ export function AllWidgetsSidebar({ toggleDrawer }: AllWidgetsSidebarProps) {
   };
 
   const handleOnAddWidget = (widgetType: WidgetEnum) => {
+    const pageId = currentPage$.pageId;
     switch (widgetType) {
       case WidgetEnum.CARD:
       case WidgetEnum.FRAME:
@@ -91,6 +92,27 @@ export function AllWidgetsSidebar({ toggleDrawer }: AllWidgetsSidebarProps) {
             captionTitle: "Caption Title",
             captionSubtitle: "Caption Subtitle",
             images: [],
+            enableElements: false,
+          };
+          editor$.addWidget(pageId, widgetdata);
+        }
+        break;
+      case WidgetEnum.TABLE:
+        if (pageId) {
+          const widgetdata: WidgetTypes = {
+            type: WidgetEnum.TABLE,
+            id: v4(),
+            transformation: {
+              x: 0,
+              y: 0,
+              width: 800,
+              height: 800,
+            },
+            title: "Table Title",
+            subtitle: "Table Subtitle",
+            captionEnabled: false,
+            captionTitle: "Table Title",
+            captionSubtitle: "Table Subtitle",
             enableElements: false,
           };
           editor$.addWidget(pageId, widgetdata);

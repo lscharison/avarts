@@ -57,10 +57,11 @@ export const CardWidgetEditorTool = ({
     const imageUrl = await updateDeckImage(imageId, file);
     setIsUploading(false);
     if (imageUrl) {
+      const currentImages = editorWidgetState.images || [];
       editorObs$.updateWidget(currentWidgetState.widgetId, {
         ...editorWidgetState,
         images: [
-          ...editorWidgetState.images,
+          ...currentImages,
           {
             id: imageId,
             name: file.name,
@@ -74,7 +75,8 @@ export const CardWidgetEditorTool = ({
   const handleOnDeleteImage = async (imageId: string, imageName: string) => {
     try {
       await deleteImageReference(imageId, imageName);
-      const images = editorWidgetState.images.filter((image) => {
+      const currentImages = editorWidgetState.images || [];
+      const images = currentImages.filter((image) => {
         return image.id !== imageId;
       });
       editorObs$.updateWidget(currentWidgetState.widgetId, {
