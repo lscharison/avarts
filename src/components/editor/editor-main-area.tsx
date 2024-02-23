@@ -5,35 +5,35 @@ import useCallbackRefDimensions from "@/hooks/useCallbackRefDimensions";
 import { EditorPagination } from "./editor-pagination";
 import { EditorPages } from "./editor-pages";
 import { PageTitle } from "./page-title";
-import MoveablePlusManager from "../moveableplus-manager";
 import {
   IPageState,
   useEditorObserveable,
+  useHoveredWidgetRepo,
   useObservable,
   useSelectedWidgetRepo,
 } from "@/store";
-import { WidgetEnum } from "@/types";
-import { EditorStateTypes } from "@/types/editor.types";
-import { orderBy } from "lodash";
+import { WidgetElement } from "@/types";
+import {
+  EditorStateTypes,
+  GridLayoutData,
+  availableHandles,
+} from "@/types/editor.types";
+import { orderBy, pick } from "lodash";
 import { useCurrentPageObserveable } from "@/hooks/useCurrentPageObserveable";
-import { OnDragEnd } from "react-moveable";
 import { useEditorWidgetObserveable } from "@/hooks/useEditorWidgetsObserveable";
 import { useCurrentWidgetObserveable } from "@/hooks/useCurrentWidgetObserveable";
+import ReactGridLayout from "react-grid-layout";
 
 export type EditorMainAreaProps = {
   page: IPageState;
   setPage: (page: number) => void;
   editorState: EditorStateTypes;
-  verticalGuidelines: number[];
-  horizontalGuidelines: number[];
 };
 
 export const EditorMainArea = ({
   page,
   setPage,
   editorState,
-  verticalGuidelines,
-  horizontalGuidelines,
 }: EditorMainAreaProps) => {
   const { currentPage } = page;
   const { width, height } = useWindowSize();
@@ -46,8 +46,10 @@ export const EditorMainArea = ({
   const editorObs$ = useEditorObserveable();
   const { dimensions, setRef } = useCallbackRefDimensions();
   const selectedWidgetObs$ = useSelectedWidgetRepo();
+  const hoveredWidgetRepo = useHoveredWidgetRepo();
   const currentPage$ = useCurrentPageObserveable();
   const selectedWidgetState = useObservable(selectedWidgetObs$.getObservable());
+  const hoveredState$ = useObservable(hoveredWidgetRepo.getObservable());
   const editorWidgetState = useEditorWidgetObserveable(
     selectedWidgetState.widgetId
   );
@@ -78,53 +80,27 @@ export const EditorMainArea = ({
     }
   };
 
-  React.useEffect(() => {
-    const gridContainer = gridRef.current;
-    if (!gridContainer) return;
-    // Calculate the number of grid lines and their spacing
-    const gridSize = 20;
-    const numGridLinesX = Math.floor(gridContainer.offsetWidth / gridSize);
-    const numGridLinesY = Math.floor(gridContainer.offsetHeight / gridSize);
-    // Create horizontal grid lines
-    for (let i = 0; i < numGridLinesX; i++) {
-      const line = document.createElement("div");
-      line.className = "grid-line";
-      line.style.top = "0";
-      line.style.left = `${i * gridSize}px`;
-      line.style.width = "1px";
-      line.style.height = "100%";
-      gridContainer.appendChild(line);
-    }
-
-    // Create vertical grid lines
-    for (let i = 0; i < numGridLinesY; i++) {
-      const line = document.createElement("div");
-      line.className = "grid-line";
-      line.style.top = `${i * gridSize}px`;
-      line.style.left = "0";
-      line.style.width = "100%";
-      line.style.height = "1px";
-      gridContainer.appendChild(line);
-    }
-  }, [width, height, dimensions]);
-
-  const handleOnMoveableSelect = (widgetId: string, widgetType: WidgetEnum) => {
+  const handleOnMoveableSelect = (
+    widgetId: string,
+    widgetElement: WidgetElement
+  ) => {
     selectedWidgetObs$.setSelectedWidget(
       widgetId,
       currentPage$.pageId!,
-      widgetType
+      widgetElement
     );
   };
 
   const handleOnClickInternalWidget = (e: any) => {
     const target = e.target;
     const widgetType = target.getAttribute("data-widget");
+    const widgetElement = target.getAttribute("data-element-type");
     console.log("getInternalValue widgetType", widgetType);
     if (widgetType) {
       selectedWidgetObs$.setSelectedWidget(
         selectedWidgetState.widgetId,
         currentPage$.pageId!,
-        widgetType
+        widgetElement
       );
     }
   };
@@ -133,20 +109,10 @@ export const EditorMainArea = ({
     selectedWidgetObs$.unSelect();
   };
 
-  const handleOnChangeEnd = (e: OnDragEnd) => {
-    if (e.lastEvent) {
-      const { width, height, translate } = e.lastEvent || {};
-      console.log("handleOnChangeEnd", width, height);
-      console.log("LastEvent", e.lastEvent);
-      editorObs$.updateWidget(selectedWidgetState.widgetId, {
-        ...editorWidgetState,
-        transformation: {
-          ...editorWidgetState.transformation,
-          ...(translate && { x: translate[0], y: translate[1] }),
-          width: width,
-          height: height,
-        },
-      });
+  const handleOnLayoutChange = (layouts: ReactGridLayout.Layout[]) => {
+    if (layouts) {
+      console.log("handleOnLayoutChange", layouts);
+      editorObs$.updateLayoutTransformations(layouts);
     }
   };
 
@@ -166,27 +132,12 @@ export const EditorMainArea = ({
       /// onClick={(e: React.SyntheticEvent<HTMLElement>) => updateTarget(e.target)}
     >
       <PageTitle page={currentPage} />
-      <div className="flex flex-grow relative" ref={mainAreaRef}>
-        <div
-          className="grid-container absolute flex flex-1 w-full h-full"
-          ref={gridRef}
-          style={{
-            pointerEvents: "none", // Ensure the grid doesn't interfere with dragging and resizing
-          }}
+      <div className="flex flex-grow relative bg-gray-200" ref={mainAreaRef}>
+        <EditorPages
+          pageId={currentPage$.pageId || ""}
+          setRef={setRef}
+          onLayoutChange={handleOnLayoutChange}
         />
-        <MoveablePlusManager
-          mainAreaRef={mainAreaRef}
-          onSelectMoveableStart={handleOnMoveableSelect}
-          onUnselectMoveable={handleOnMoveableUnselect}
-          onChangeEnd={handleOnChangeEnd}
-          verticalGuidelines={verticalGuidelines}
-          horizontalGuidelines={horizontalGuidelines}
-          isUnSelected={unSelect}
-          onClickInternalWidget={handleOnClickInternalWidget}
-          onDelete={handleOnDelete}
-        >
-          <EditorPages pageId={currentPage$.pageId || ""} setRef={setRef} />
-        </MoveablePlusManager>
       </div>
       {totalPages && totalPages > 1 && (
         <EditorPagination

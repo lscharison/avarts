@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React from "react";
 import { IconButton, Typography } from "@material-tailwind/react";
@@ -44,7 +45,7 @@ export const ViewDashboardPage = ({
           </Typography>
         </div>
       </div>
-      <div className="flex flex-row items-center justify-center gap-3 bg-gray-100 border-2 border-solid border-gray-200">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-3 bg-gray-100 border-2 border-solid border-gray-200">
         {map(pages, (page, key) => {
           return (
             <>

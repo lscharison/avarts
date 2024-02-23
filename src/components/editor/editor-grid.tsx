@@ -188,8 +188,6 @@ export const EditorGrid = ({ editorState }: EditorGridProps) => {
                         page={currentPage$}
                         setPage={setPage}
                         editorState={editorState}
-                        verticalGuidelines={verticalSnapGuides}
-                        horizontalGuidelines={horizontalSnapGuides}
                       />
                     </div>
                   </div>
