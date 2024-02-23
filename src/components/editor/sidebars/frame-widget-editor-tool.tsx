@@ -30,6 +30,7 @@ import { WidgetElement } from "@/types";
 import { AddImageWidgetSidebar } from "./add-image-sidebar";
 import { DynamicForm } from "./add-key-value.form";
 import { DynamicBarForm } from "./add-series-value.form";
+import { TableForm } from "./table-data-editor-tool";
 
 export type FrameWidgetEditorToolProps = {
   toggleDrawer: () => void;
@@ -202,6 +203,7 @@ export const FrameWidgetEditorTool = ({
             )}
             {widgetElement === WidgetElement.PIE_CHART && <DynamicForm />}
             {widgetElement === WidgetElement.CHART && <DynamicBarForm />}
+            {widgetElement === WidgetElement.TABLE && <TableForm />}
           </div>
           <div className="flex gap-1 my-4 px-1">
             <Typography variant="h6" color="blue-gray" className="w-16">

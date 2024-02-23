@@ -26,6 +26,12 @@ export type GridResponsiveLayoutData = {
   xs?: GridLayoutData[];
 };
 
+export type WidgetTableTypes = {
+  name: string;
+  columns: string[];
+  rows: string[][];
+};
+
 export type WidgetImageTypes = {
   id: string;
   name: string;
@@ -56,6 +62,7 @@ export type WidgetTypes = {
   elementType?: WidgetElement;
   chartType?: string;
   chartData?: Record<string, any>;
+  tableData?: WidgetTableTypes;
 };
 
 export type PageTypes = {

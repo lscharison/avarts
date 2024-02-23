@@ -16,6 +16,7 @@
     "@daybrush/utils": "^1.13.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@faker-js/faker": "^8.4.1",
     "@google-cloud/firestore": "^6.7.0",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
@@ -93,8 +94,8 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.7",
-    "@types/lodash": "^4.14.202",
     "@types/leaflet": "^1.9.8",
+    "@types/lodash": "^4.14.202",
     "@types/react-file-icon": "^1.0.4",
     "@types/react-grid-layout": "^1.3.5",
     "@types/react-table": "^7.7.19",

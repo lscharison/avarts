@@ -50,7 +50,7 @@ export const DynamicForm = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="p-4">
       {formData.map((pair, index) => (
         <div key={index} className="flex flex-col mb-4">
           <LabelInput

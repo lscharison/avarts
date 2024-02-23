@@ -26,6 +26,7 @@ import { XCircleIcon } from "@heroicons/react/24/solid";
 import { BarChartWidget } from "./barGraph-widget";
 import { PieChartWidget } from "./pieChart-widget";
 import { MapWidget } from "./dynamic-map-widget";
+import { ReactTableWidget } from "@/components/ui/table";
 
 export type FrameWidgetProps = {
   data: WidgetTypes;
@@ -160,6 +161,9 @@ export function FrameWidget({ data }: FrameWidgetProps) {
           )}
           {data.elementType && data.elementType === WidgetElement.MAP && (
             <MapWidget data={data} />
+          )}
+          {data.elementType && data.elementType === WidgetElement.TABLE && (
+            <ReactTableWidget data={data} />
           )}
         </CardBody>
         {data.captionEnabled && (

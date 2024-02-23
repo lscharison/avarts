@@ -23,6 +23,7 @@ import { useCurrentPageObserveable } from "@/hooks/useCurrentPageObserveable";
 import { useEditorWidgetObserveable } from "@/hooks/useEditorWidgetsObserveable";
 import { useCurrentWidgetObserveable } from "@/hooks/useCurrentWidgetObserveable";
 import ReactGridLayout from "react-grid-layout";
+import { ReactTableWidget } from "../ui/table";
 
 export type EditorMainAreaProps = {
   page: IPageState;
@@ -146,6 +147,7 @@ export const EditorMainArea = ({
           setPage={setPageValue}
         />
       )}
+      {/** React table */}
     </div>
   );
 };

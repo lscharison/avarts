@@ -84,10 +84,10 @@ export function FrameWidget({ data }: FrameWidgetProps) {
             </>
           )}
         {data.elementType && data.elementType === WidgetElement.CHART && (
-          <>{data.chartType === "Area" && <BarChartWidget data={data} />}</>
+          <BarChartWidget data={data} />
         )}
         {data.elementType && data.elementType === WidgetElement.PIE_CHART && (
-          <>{data.chartType === "Area" && <PieChartWidget data={data} />}</>
+          <PieChartWidget data={data} />
         )}
         {data.elementType && data.elementType === WidgetElement.MAP && (
           <>
