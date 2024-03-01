@@ -13,7 +13,9 @@ const initialState = {
   widgetElement: null,
 };
 
-const selectedSubject = new BehaviorSubject<IHoverWidgetState>(initialState);
+export const hoveredSubject = new BehaviorSubject<IHoverWidgetState>(
+  initialState
+);
 
 export const useHoveredWidgetRepo = () => {
   const set = (
@@ -21,8 +23,8 @@ export const useHoveredWidgetRepo = () => {
     pageId: string,
     widgetElement: WidgetElement | null
   ) => {
-    const state = selectedSubject.getValue();
-    selectedSubject.next({
+    const state = hoveredSubject.getValue();
+    hoveredSubject.next({
       ...state,
       widgetId,
       pageId,
@@ -31,16 +33,16 @@ export const useHoveredWidgetRepo = () => {
   };
 
   const updateWidgetType = (widgetElement: WidgetElement) => {
-    const state = selectedSubject.getValue();
-    selectedSubject.next({ ...state, widgetElement });
+    const state = hoveredSubject.getValue();
+    hoveredSubject.next({ ...state, widgetElement });
   };
 
   const unSelect = () => {
-    selectedSubject.next(initialState);
+    hoveredSubject.next(initialState);
   };
 
   const getObservable = () => {
-    return selectedSubject;
+    return hoveredSubject;
   };
 
   return {

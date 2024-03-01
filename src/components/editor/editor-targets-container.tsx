@@ -3,21 +3,26 @@ import { useEditorPageWidgetsObserveable } from "@/hooks/useEditorWidgetsObserve
 import { map } from "lodash";
 import { WidgetTypes, availableHandles } from "@/types/editor.types";
 import GridLayout from "./gridlayout/resize-grid-layout";
-import { useHoveredWidgetRepo, useObservable } from "@/store";
+import {
+  useHoveredWidgetRepo,
+  useObservable,
+  useSelectedWidgetRepo,
+} from "@/store";
+import { useMeasure } from "react-use";
 
 type EditorTargetsProps = {
   pageId: string;
-  setRef: (el: HTMLDivElement) => void;
   onLayoutChange: (layout: any) => void;
 };
 
 export const EditorTargetsContainer = ({
   pageId,
-  setRef,
   onLayoutChange,
 }: EditorTargetsProps) => {
   const allWidgets = useEditorPageWidgetsObserveable(pageId);
+  const selectedWidgetObs$ = useSelectedWidgetRepo();
 
+  const [ref, { width, height }] = useMeasure();
   const layoutData = React.useMemo(() => {
     const widgetLayoutData = map(allWidgets, (widget: WidgetTypes) => {
       return {
@@ -65,17 +70,34 @@ export const EditorTargetsContainer = ({
   };
 
   const onHover = (widgetId: string) => {
-    console.log("widgetId", widgetId);
+    console.log("onHover", widgetId);
+  };
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log("mouse down");
+  };
+
+  const onEditorLayoutClick = (e: React.MouseEvent) => {
+    selectedWidgetObs$.unSelect();
   };
 
   return (
-    <div className="flex flex-grow" ref={setRef}>
+    <div
+      className="flex flex-grow"
+      // @ts-ignore
+      ref={ref}
+      data-testid="editor-targets-container"
+      onClick={onEditorLayoutClick}
+    >
       <GridLayout
         data={layoutData}
         onLayoutChange={onLayoutChange}
         onDragStart={onDragStart}
         onResizeStart={onResizeStart}
         onHover={onHover}
+        onMouseDown={onMouseDown}
+        containerHeight={Math.floor(Math.ceil(height / 100) * 100)}
       />
     </div>
   );

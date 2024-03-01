@@ -1,5 +1,6 @@
 .react-grid-layout {
   background: #eee;
+  position: relative;
 }
 .layoutJSON {
   background: #ddd;
@@ -58,6 +59,13 @@
 li b {
   font-size: 19px;
   line-height: 14px;
+}
+
+.react-grid-drag > .x-drag-handle {
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
 }
 
 

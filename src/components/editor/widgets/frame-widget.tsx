@@ -74,7 +74,7 @@ export function FrameWidget({ data }: FrameWidgetProps) {
 
   const handleOnRootClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    console.log("e.currentTarget", e.currentTarget);
+    console.log("handleOnRootClick e.currentTarget", e.currentTarget);
     selectedWidgetRepo.setSelectedWidget(
       data.id,
       currentPage$.pageId!,
@@ -117,7 +117,7 @@ export function FrameWidget({ data }: FrameWidgetProps) {
             variant="h6"
             color="blue-gray"
             data-id="INTERNAL_WIDGET"
-            className="m-1"
+            className="m-1 x-drag-handle cursor-move"
           >
             {data.title || "Title"}
           </Typography>

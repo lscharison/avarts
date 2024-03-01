@@ -45,7 +45,6 @@ export const EditorMainArea = ({
   const currentWidgetState = useCurrentWidgetObserveable();
 
   const editorObs$ = useEditorObserveable();
-  const { dimensions, setRef } = useCallbackRefDimensions();
   const selectedWidgetObs$ = useSelectedWidgetRepo();
   const hoveredWidgetRepo = useHoveredWidgetRepo();
   const currentPage$ = useCurrentPageObserveable();
@@ -136,7 +135,6 @@ export const EditorMainArea = ({
       <div className="flex flex-grow relative bg-gray-200" ref={mainAreaRef}>
         <EditorPages
           pageId={currentPage$.pageId || ""}
-          setRef={setRef}
           onLayoutChange={handleOnLayoutChange}
         />
       </div>

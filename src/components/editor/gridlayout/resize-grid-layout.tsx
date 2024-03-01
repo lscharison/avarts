@@ -2,8 +2,7 @@
 import React, { Component } from "react";
 import { find, get, isEmpty, map } from "lodash";
 
-import "react-grid-layout/css/styles.css";
-import "react-resizable/css/styles.css";
+import "../../../../node_modules/react-grid-layout/css/styles.css";
 import "./styles.css";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
@@ -13,6 +12,7 @@ import {
   WidgetTypes,
 } from "@/types/editor.types";
 import { RenderWidgetItem } from "./render-widget";
+import { cn } from "@/lib/utils";
 const availableHandles = ["s", "w", "e", "n"];
 
 // const initialLayout = [
@@ -51,9 +51,11 @@ export interface GridLayoutProps {
     element: HTMLElement
   ) => void;
   onHover?: (widgetId: string) => void;
+  onMouseDown?: (e: any) => void;
   cols?: any;
   initialLayout?: any;
   data: GridResponsiveLayoutData;
+  containerHeight?: number;
 }
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -84,6 +86,7 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
   generateDOM() {
     const { data } = this.props;
     console.log("generated DOM data", data);
+    // hover is added to the grid layout
     const onHover = (e: any) => {
       if (e && e.target) {
         const widgetId = e.target?.getAttribute("data-widgetid");
@@ -91,12 +94,21 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
         if (this.props.onHover) this.props.onHover(widgetId);
       }
     };
+
+    const onMouseDown = (e: any) => {
+      if (e && e.target) {
+        if (this.props.onMouseDown) this.props.onMouseDown(e);
+      }
+    };
+
     return map(data.lg, function (layout, i) {
       return (
         <div
           key={layout.i}
           className={"flex p-1 bg-blue-gray-700"}
           onMouseEnter={onHover}
+          onMouseDown={onMouseDown}
+          data-widget={"GRID_ITEM"}
           data-widgetid={layout.i}
         >
           <RenderWidgetItem id={layout.i} />
@@ -161,10 +173,9 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
 
   render() {
     return (
-      <div className="flex flex-grow flex-col">
-        <div className="flex flex-grow flex-col flex-1">
+      <div className="flex flex-grow flex-col h-[1080px]">
+        <div className="h-[1080px]">
           <ResponsiveReactGridLayout
-            {...this.props}
             // @ts-ignore
             layouts={this.props.data}
             isBounded={true}
@@ -172,15 +183,18 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
             onLayoutChange={this.onLayoutChange}
             isDraggable
             isResizable
-            // WidthProvider option
-            measureBeforeMount={false}
             // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
             // and set `measureBeforeMount={true}`.
-            useCSSTransforms={this.state.mounted}
+            useCSSTransforms={true}
+            allowOverlap={true}
             compactType={this.state.compactType}
-            preventCollision={!this.state.compactType}
+            preventCollision={false}
             onDragStart={this.handleOnDragStart}
             onResizeStart={this.handleOnResizeStart}
+            transformScale={1}
+            margin={[0, 0]}
+            autoSize={true}
+            draggableHandle=".x-drag-handle"
           >
             {this.generateDOM()}
           </ResponsiveReactGridLayout>
