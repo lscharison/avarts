@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { DocumentTypes } from "@/types/editor.types";
-import { DynamicPdfViewer } from "./dynamic-pdf-viewer";
+import { DynamicDocViewerManager } from "./dynamic-docviewer";
 
 export type DialogViewWorkBookProps = {
   open: boolean;
@@ -19,7 +19,7 @@ export type DialogViewWorkBookProps = {
   selectedDocument: DocumentTypes;
 };
 
-export const DialogViewPdf = ({
+export const DocumentDialogViewer = ({
   open,
   handler,
   selectedDocument,
@@ -33,7 +33,11 @@ export const DialogViewPdf = ({
         </IconButton>
       </DialogHeader>
       <DialogBody className="h-[80%]">
-        <DynamicPdfViewer file={selectedDocument.url} />
+        <DynamicDocViewerManager
+          selectedDocument={selectedDocument}
+          handler={handler}
+          open={open}
+        />
       </DialogBody>
     </Dialog>
   );

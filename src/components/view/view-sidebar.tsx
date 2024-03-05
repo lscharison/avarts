@@ -48,7 +48,7 @@ import { DynamicHeroIcon } from "../ui/DynamicHeroIcon";
 import { map } from "lodash";
 import { FileIcon, defaultStyles } from "react-file-icon";
 import { DialogViewWorkBook } from "./excel-utils/dialog-view-workbook";
-import { DialogViewPdf } from "./pdf-viewer/dialog-view-pdf";
+import { DocumentDialogViewer } from "./document-viewer";
 
 export interface Item {
   id: number;
@@ -394,8 +394,8 @@ export const ViewSidebar = ({ page, setPage }: EditorSidebarProps) => {
         </>
         <>
           {selectedDocument &&
-            selectedDocument.docType === DocumentTypeEnum.PDF && (
-              <DialogViewPdf
+            selectedDocument.docType !== DocumentTypeEnum.XLSX && (
+              <DocumentDialogViewer
                 open={showUploader}
                 handler={() => setShowUploader(false)}
                 selectedDocument={selectedDocument}
