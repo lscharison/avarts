@@ -162,7 +162,7 @@ export const ViewMiniSidebar = ({
                         fontFamily: "inherit",
                       }}
                     >
-                      {page.name || page.title}
+                      {page.name || page.title || ` `}
                     </Typography>
                   </ListItem>
                 </React.Fragment>
@@ -237,7 +237,7 @@ export const ViewMiniSidebar = ({
                           fontFamily: "inherit",
                         }}
                       >
-                        {doc.name}
+                        {doc.name || ` `}
                       </Typography>
                     </ListItem>
                   );
@@ -293,7 +293,7 @@ export const ViewMiniSidebar = ({
                     fontFamily: "inherit",
                   }}
                 >
-                  {deckInfo?.disclaimer.description}
+                  {deckInfo?.disclaimer.description || ` `}
                 </Typography>
               </AccordionBody>
             </Accordion>

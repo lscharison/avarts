@@ -2,8 +2,7 @@
 import React, { Component } from "react";
 import { find, get, isEmpty, map } from "lodash";
 
-import "react-grid-layout/css/styles.css";
-import "react-resizable/css/styles.css";
+import "../../../../node_modules/react-grid-layout/css/styles.css";
 import "./styles.css";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
@@ -95,7 +94,6 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
   };
 
   render() {
-    console.log("this.props", this.props);
     return (
       <div className="flex flex-grow flex-col">
         <div className="flex flex-grow flex-col flex-1">
@@ -108,13 +106,13 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
             onLayoutChange={this.onLayoutChange}
             isDraggable={false}
             isResizable={false}
-            // WidthProvider option
-            measureBeforeMount={false}
-            // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
-            // and set `measureBeforeMount={true}`.
-            useCSSTransforms={this.state.mounted}
+            useCSSTransforms={true}
+            allowOverlap={true}
             compactType={this.state.compactType}
-            preventCollision={!this.state.compactType}
+            preventCollision={false}
+            transformScale={1}
+            margin={[0, 0]}
+            autoSize={true}
           >
             {this.generateDOM()}
           </ResponsiveReactGridLayout>
