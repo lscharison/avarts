@@ -27,6 +27,9 @@ import { BarChartWidget } from "./barGraph-widget";
 import { PieChartWidget } from "./pieChart-widget";
 import { MapWidget } from "./dynamic-map-widget";
 import { ReactTableWidget } from "@/components/ui/table";
+import { TabsComponent } from "@/components/ui/tabs/tabs";
+import { cn } from "@/lib/utils";
+import { TimelineComponent } from "@/components/ui/timeline";
 
 export type FrameWidgetProps = {
   data: WidgetTypes;
@@ -131,7 +134,10 @@ export function FrameWidget({ data }: FrameWidgetProps) {
           </Typography>
         </CardHeader>
         <CardBody
-          className="p-2 my-1 h-20 flex flex-grow flex-col justify-center items-center overflow-hidden"
+          className={cn(
+            "p-2 my-1 h-20 flex flex-grow flex-col justify-center items-center overflow-hidden",
+            data.elementType === WidgetElement.TIMELINE && "items-start"
+          )}
           data-id="FRAME_CARD_BODY"
           data-root="true"
           onClick={handleOnRootClick}
@@ -164,6 +170,9 @@ export function FrameWidget({ data }: FrameWidgetProps) {
           )}
           {data.elementType && data.elementType === WidgetElement.TABLE && (
             <ReactTableWidget data={data} />
+          )}
+          {data.elementType && data.elementType === WidgetElement.TIMELINE && (
+            <TimelineComponent data={data} />
           )}
         </CardBody>
         {data.captionEnabled && (

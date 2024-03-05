@@ -21,6 +21,7 @@ import { useEditorWidgetObserveable } from "@/hooks/useEditorWidgetsObserveable"
 import { BarChartWidget } from "@/components/editor/widgets/barGraph-widget";
 import { PieChartWidget } from "@/components/editor/widgets/pieChart-widget";
 import { MapWidget } from "@/components/editor/widgets/dynamic-map-widget";
+import { TimelineComponent } from "@/components/ui/timeline";
 
 export type FrameWidgetProps = {
   data: WidgetTypes;
@@ -92,6 +93,11 @@ export function FrameWidget({ data }: FrameWidgetProps) {
         {data.elementType && data.elementType === WidgetElement.MAP && (
           <>
             <MapWidget data={data} />
+          </>
+        )}
+        {data.elementType && data.elementType === WidgetElement.TIMELINE && (
+          <>
+            <TimelineComponent data={data} />
           </>
         )}
       </CardBody>

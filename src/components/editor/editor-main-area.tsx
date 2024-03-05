@@ -7,6 +7,7 @@ import { EditorPages } from "./editor-pages";
 import { PageTitle } from "./page-title";
 import {
   IPageState,
+  useEditorDecksObserveable,
   useEditorObserveable,
   useHoveredWidgetRepo,
   useObservable,
@@ -18,12 +19,14 @@ import {
   GridLayoutData,
   availableHandles,
 } from "@/types/editor.types";
-import { orderBy, pick } from "lodash";
+import { map, orderBy, pick } from "lodash";
 import { useCurrentPageObserveable } from "@/hooks/useCurrentPageObserveable";
 import { useEditorWidgetObserveable } from "@/hooks/useEditorWidgetsObserveable";
 import { useCurrentWidgetObserveable } from "@/hooks/useCurrentWidgetObserveable";
 import ReactGridLayout from "react-grid-layout";
 import { ReactTableWidget } from "../ui/table";
+import { useEditorPagesObserveable } from "@/hooks/useEditorPagesObserveable";
+import { DashboardViewComponent } from "@/components/ui/dashboard/dashboard-view";
 
 export type EditorMainAreaProps = {
   page: IPageState;
@@ -43,7 +46,8 @@ export const EditorMainArea = ({
   const gridRef = React.useRef<HTMLDivElement>(null);
   const mainAreaRef = React.useRef<HTMLDivElement>(null);
   const currentWidgetState = useCurrentWidgetObserveable();
-
+  const deckInfo = useEditorDecksObserveable();
+  const pages$ = useEditorPagesObserveable();
   const editorObs$ = useEditorObserveable();
   const selectedWidgetObs$ = useSelectedWidgetRepo();
   const hoveredWidgetRepo = useHoveredWidgetRepo();
@@ -111,8 +115,16 @@ export const EditorMainArea = ({
 
   const handleOnLayoutChange = (layouts: ReactGridLayout.Layout[]) => {
     if (layouts) {
-      console.log("handleOnLayoutChange", layouts);
-      editorObs$.updateLayoutTransformations(layouts);
+      const correctedLayouts = map(layouts, (layout) => {
+        const { i, x, y, w, h } = layout;
+        return {
+          ...layout,
+          h: isNaN(h) ? 2 : h,
+        };
+      });
+
+      console.log("handleOnLayoutChange", correctedLayouts);
+      editorObs$.updateLayoutTransformations(correctedLayouts);
     }
   };
 
@@ -133,10 +145,25 @@ export const EditorMainArea = ({
     >
       <PageTitle page={currentPage} />
       <div className="flex flex-grow relative bg-gray-200" ref={mainAreaRef}>
-        <EditorPages
-          pageId={currentPage$.pageId || ""}
-          onLayoutChange={handleOnLayoutChange}
-        />
+        <>
+          {currentPage === 0 && (
+            <>
+              <DashboardViewComponent
+                coverPhoto={deckInfo.coverPhoto}
+                title={deckInfo.title}
+                subtitle={deckInfo.subtitle}
+                pages={pages$}
+                setPage={setPageValue}
+              />
+            </>
+          )}
+          {currentPage > 0 && (
+            <EditorPages
+              pageId={currentPage$.pageId || ""}
+              onLayoutChange={handleOnLayoutChange}
+            />
+          )}
+        </>
       </div>
       {totalPages && totalPages > 1 && (
         <EditorPagination

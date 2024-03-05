@@ -173,7 +173,7 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
 
   render() {
     return (
-      <div className="flex flex-grow flex-col h-[1080px]">
+      <div className="flex flex-grow flex-col resizegridlayout">
         <div className="h-[1080px]">
           <ResponsiveReactGridLayout
             // @ts-ignore
