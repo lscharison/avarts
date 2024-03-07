@@ -9,7 +9,7 @@ import { DynamicHeroIcon } from "@/components/ui/DynamicHeroIcon";
 import { useEditorPagesObserveable } from "@/hooks/useEditorPagesObserveable";
 import { map } from "lodash";
 import { SectionScroller } from "@/components/ui/sections/section-scroller";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "@/components/ui/swipers/slider";
 
 export const SectionEditTools = () => {
   // states

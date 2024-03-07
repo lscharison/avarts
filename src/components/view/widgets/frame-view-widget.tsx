@@ -14,7 +14,7 @@ import {
   useObservable,
   useSelectedWidgetRepo,
 } from "@/store";
-import { SwiperThumbs } from "@/components/ui/swiper-thumbs";
+import { SwiperThumbs } from "@/components/ui/swipers/swiper-thumbs";
 import { useCurrentPageObserveable } from "@/hooks/useCurrentPageObserveable";
 import { useEditorWidgetObserveable } from "@/hooks/useEditorWidgetsObserveable";
 //import { BarChart } from "@/components/ui/charts";
@@ -22,6 +22,7 @@ import { BarChartWidget } from "@/components/editor/widgets/barGraph-widget";
 import { PieChartWidget } from "@/components/editor/widgets/pieChart-widget";
 import { MapWidget } from "@/components/editor/widgets/dynamic-map-widget";
 import { TimelineComponent } from "@/components/ui/timeline";
+import { IconsGalleryViewer } from "@/components/ui/icon-viewer";
 
 export type FrameWidgetProps = {
   data: WidgetTypes;
@@ -49,7 +50,7 @@ export function FrameWidget({ data }: FrameWidgetProps) {
       id={data.id}
     >
       <CardHeader
-        className="flex flex-col max-h-24 -mt-0 min-w-0 min-h-0 m-0 gap-1"
+        className="flex flex-col max-h-40 -mt-0 min-w-0 min-h-[75px] m-0 gap-1"
         data-widget-id={data.id}
       >
         <Typography
@@ -70,7 +71,7 @@ export function FrameWidget({ data }: FrameWidgetProps) {
         </Typography>
       </CardHeader>
       <CardBody
-        className="p-2 my-1 h-20 flex flex-grow flex-col justify-center items-center overflow-hidden"
+        className="p-2 my-1  flex flex-grow flex-col justify-center items-center overflow-hidden"
         data-id="FRAME_CARD_BODY"
         data-root="true"
         data-widgetid={data.id}
@@ -100,10 +101,16 @@ export function FrameWidget({ data }: FrameWidgetProps) {
             <TimelineComponent data={data} />
           </>
         )}
+        {data.elementType &&
+          data.elementType === WidgetElement.ICON_GALLERY && (
+            <>
+              <IconsGalleryViewer data={data} />
+            </>
+          )}
       </CardBody>
       {data.captionEnabled && (
         <CardFooter
-          className="p-0 m-0 flex flex-col gap-1 max-h-24"
+          className="p-0 m-0 flex flex-col gap-1 max-h-40 min-h-[75px]"
           data-testid="cardfooter"
         >
           <>

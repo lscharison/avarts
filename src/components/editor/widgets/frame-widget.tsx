@@ -18,7 +18,7 @@ import {
   useSelectedWidgetRepo,
 } from "@/store";
 import { isEmpty } from "lodash";
-import { SwiperThumbs } from "@/components/ui/swiper-thumbs";
+import { SwiperThumbs } from "@/components/ui/swipers";
 import { useCurrentPageObserveable } from "@/hooks/useCurrentPageObserveable";
 import { useEditorWidgetObserveable } from "@/hooks/useEditorWidgetsObserveable";
 // import { BarChart } from "@/components/ui/charts";
@@ -30,6 +30,7 @@ import { ReactTableWidget } from "@/components/ui/table";
 import { TabsComponent } from "@/components/ui/tabs/tabs";
 import { cn } from "@/lib/utils";
 import { TimelineComponent } from "@/components/ui/timeline";
+import { IconsGalleryViewer } from "@/components/ui/icon-viewer";
 
 export type FrameWidgetProps = {
   data: WidgetTypes;
@@ -113,7 +114,7 @@ export function FrameWidget({ data }: FrameWidgetProps) {
         id={data.id}
       >
         <CardHeader
-          className="flex flex-col max-h-24 -mt-0 min-w-0 min-h-0 m-0 gap-1"
+          className="flex flex-col max-h-28 -mt-0 min-w-0 min-h-[75px] m-0 gap-1"
           data-widgetid={data.id}
         >
           <Typography
@@ -135,8 +136,9 @@ export function FrameWidget({ data }: FrameWidgetProps) {
         </CardHeader>
         <CardBody
           className={cn(
-            "p-2 my-1 h-20 flex flex-grow flex-col justify-center items-center overflow-hidden",
-            data.elementType === WidgetElement.TIMELINE && "items-start"
+            "p-2 my-1 flex flex-grow flex-col justify-center items-center overflow-hidden",
+            data.elementType === WidgetElement.TIMELINE && "items-start",
+            data.elementType === WidgetElement.PICTURE && "items-center"
           )}
           data-id="FRAME_CARD_BODY"
           data-root="true"
@@ -174,10 +176,14 @@ export function FrameWidget({ data }: FrameWidgetProps) {
           {data.elementType && data.elementType === WidgetElement.TIMELINE && (
             <TimelineComponent data={data} />
           )}
+          {data.elementType &&
+            data.elementType === WidgetElement.ICON_GALLERY && (
+              <IconsGalleryViewer data={data} />
+            )}
         </CardBody>
         {data.captionEnabled && (
           <CardFooter
-            className="p-0 m-0 flex flex-col gap-1 max-h-24"
+            className="p-0 m-0 flex flex-col gap-1 max-h-24 min-h-[75px]"
             data-testid="cardfooter"
           >
             <>
