@@ -28,14 +28,14 @@ export const TableForm = () => {
     console.log("table effect running it");
     const data = editorWidgetState?.tableData;
     if (!data) return;
-    const { name, rows, columns } = data;
-    setTableName(name || "");
-    if (Array.isArray(rows)) {
-      setRowValue(rows);
-    }
-    if (Array.isArray(columns)) {
-      setColumnName(columns);
-    }
+    // const { name, rows, columns } = data;
+    // setTableName(name || "");
+    // if (Array.isArray(rows)) {
+    //   setRowValue(rows);
+    // }
+    // if (Array.isArray(columns)) {
+    //   setColumnName(columns);
+    // }
   }, [editorWidgetState]);
 
   const handleColumnChange = (value: string) => {
@@ -61,11 +61,11 @@ export const TableForm = () => {
   const handleSaveData = () => {
     editorObs$.updateWidget(currentWidgetState.widgetId, {
       ...editorWidgetState,
-      tableData: {
-        name: tableName,
-        columns: columnName,
-        rows: rowValue,
-      },
+      // tableData: {
+      //   name: tableName,
+      //   columns: columnName,
+      //   rows: rowValue,
+      // },
     });
   };
 
@@ -88,7 +88,7 @@ export const TableForm = () => {
           "flex flex-col gap-1 max-h-52 overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-900"
         )}
       >
-        {map(rowValue, (row: any, index: number) => (
+        {/* {map(rowValue, (row: any, index: number) => (
           <div key={index} className="flex items-center mb-1 gap-1">
             <div>
               <LabelInput
@@ -109,7 +109,7 @@ export const TableForm = () => {
               <TrashIcon className="h-4 w-4 hover:text-red-800" />
             </IconButton>
           </div>
-        ))}
+        ))} */}
       </div>
       <div className="flex overflow-hidden justify-between items-center my-1 border-dotted border-2 border-gray-300">
         <Button
