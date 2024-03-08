@@ -50,7 +50,7 @@ export const DynamicForm = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="max-h-72 overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-900">
       {formData.map((pair, index) => (
         <div key={index} className="flex flex-col mb-4">
           <LabelInput

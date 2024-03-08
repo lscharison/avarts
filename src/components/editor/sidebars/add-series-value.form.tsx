@@ -76,7 +76,7 @@ export const DynamicBarForm = () => {
   };
 
   return (
-    <div>
+    <div className="max-h-72 overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-300">
       <div className="flex flex-col my-2">
         <LabelInput
           label="Categories"

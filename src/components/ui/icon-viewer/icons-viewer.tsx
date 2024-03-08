@@ -28,7 +28,7 @@ export const IconsGalleryViewer = ({ data }: IconsViewerProps) => {
           }}
           navigation={true}
           modules={[FreeMode, Navigation]}
-          className="mySwiper"
+          className="myiconviewer"
           style={{
             // @ts-ignore
             "--swiper-navigation-color": "rgb(33 33 33 / var(--tw-bg-opacity))",

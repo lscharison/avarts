@@ -25,6 +25,7 @@ export const TableForm = () => {
   );
 
   React.useEffect(() => {
+    console.log("table effect running it");
     const data = editorWidgetState?.tableData;
     if (!data) return;
     const { name, rows, columns } = data;
@@ -84,7 +85,7 @@ export const TableForm = () => {
       />
       <div
         className={cn(
-          "flex flex-col gap-1 px-1 max-h-36 overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+          "flex flex-col gap-1 max-h-52 overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-900"
         )}
       >
         {map(rowValue, (row: any, index: number) => (

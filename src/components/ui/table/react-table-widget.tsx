@@ -1,95 +1,186 @@
 import React from "react";
-import { ColumnDef, flexRender } from "@tanstack/react-table";
+import { IconButton, Button } from "@material-tailwind/react";
+import {
+  Column,
+  Table,
+  ExpandedState,
+  useReactTable,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getFilteredRowModel,
+  getExpandedRowModel,
+  ColumnDef,
+  flexRender,
+  RowData,
+  Row,
+} from "@tanstack/react-table";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import { makeData, Person } from "./makeData";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { WidgetTypes } from "@/types/editor.types";
-import useTable from "./useTable";
 import { isEmpty } from "lodash";
 
-export type ReactTableWidgetProps = {
-  data: WidgetTypes;
+declare module "@tanstack/react-table" {
+  interface TableMeta<TData extends RowData> {
+    updateData: (rowIndex: number, columnId: string, value: unknown) => void;
+  }
+}
+
+// outside component
+const EmptyArray: any = [];
+
+// Give our default column cell renderer editing superpowers!
+const DefaultColumn: Partial<ColumnDef<any>> = {
+  cell: ({ getValue, row: { index }, column: { id }, table }) => {
+    const initialValue = getValue();
+    // We need to keep and update the state of the cell normally
+    const [value, setValue] = React.useState(initialValue);
+
+    // When the input is blurred, we'll call our table meta's updateData function
+    const onBlur = () => {
+      table.options.meta?.updateData(index, id, value);
+    };
+
+    // If the initialValue is changed external, sync it up with our state
+    React.useEffect(() => {
+      setValue(initialValue);
+    }, [initialValue]);
+
+    return (
+      <div className="max-w-[60px]">
+        <input
+          className="p-0 max-w-[60px]"
+          value={value as string}
+          onChange={(e) => setValue(e.target.value)}
+          onBlur={onBlur}
+        />
+      </div>
+    );
+  },
 };
 
-const ReactTableWidget = ({ data }: ReactTableWidgetProps) => {
-  const { table, tableName } = useTable(data);
+function useSkipper() {
+  const shouldSkipRef = React.useRef(true);
+  const shouldSkip = shouldSkipRef.current;
 
-  //   const columns = React.useMemo<ColumnDef<any>[]>(
-  //     () => [
-  //       {
-  //         header: "Name",
-  //         footer: (props) => props.column.id,
-  //         columns: [
-  //           {
-  //             accessorKey: "firstName",
-  //             header: ({ table }) => (
-  //               <>
-  //                 <button
-  //                   {...{
-  //                     onClick: table.getToggleAllRowsExpandedHandler(),
-  //                   }}
-  //                 >
-  //                   {table.getIsAllRowsExpanded() ? (
-  //                     <ChevronDownIcon strokeWidth={2} className="h-4 w-4" />
-  //                   ) : (
-  //                     <ChevronUpIcon strokeWidth={2} className="h-4 w-4" />
-  //                   )}
-  //                 </button>{" "}
-  //                 First Name
-  //               </>
-  //             ),
-  //             cell: ({ row, getValue }) => (
-  //               <div
-  //                 style={{
-  //                   // Since rows are flattened by default,
-  //                   // we can use the row.depth property
-  //                   // and paddingLeft to visually indicate the depth
-  //                   // of the row
-  //                   paddingLeft: `${row.depth * 2}rem`,
-  //                 }}
-  //               >
-  //                 <>
-  //                   {row.getCanExpand() ? (
-  //                     <button
-  //                       {...{
-  //                         onClick: row.getToggleExpandedHandler(),
-  //                         style: { cursor: "pointer" },
-  //                       }}
-  //                     >
-  //                       {row.getIsExpanded() ? (
-  //                         <ChevronDownIcon strokeWidth={2} className="h-4 w-4" />
-  //                       ) : (
-  //                         <ChevronUpIcon strokeWidth={2} className="h-4 w-4" />
-  //                       )}
-  //                     </button>
-  //                   ) : (
-  //                     "🔵"
-  //                   )}{" "}
-  //                   {getValue()}
-  //                 </>
-  //               </div>
-  //             ),
-  //             footer: (props) => props.column.id,
-  //           },
-  //           {
-  //             accessorFn: (row) => row.lastName,
-  //             id: "lastName",
-  //             cell: (info) => info.getValue(),
-  //             header: () => <span>Last Name</span>,
-  //             footer: (props) => props.column.id,
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //     []
-  //   );
+  // Wrap a function with this to skip a pagination reset temporarily
+  const skip = React.useCallback(() => {
+    shouldSkipRef.current = false;
+  }, []);
 
-  if (!table) return null;
-  if (isEmpty(table)) return null;
-  if (isEmpty(tableName)) return null;
+  React.useEffect(() => {
+    shouldSkipRef.current = true;
+  });
+
+  return [shouldSkip, skip] as const;
+}
+
+export type ReactTableWidgetProps = {
+  data: any[];
+  columns: ColumnDef<any>[];
+};
+
+export default function ReactTableWidget(props: ReactTableWidgetProps) {
+  const { data: tableWidgetData, columns } = props;
+  const rerender = React.useReducer(() => ({}), {})[1];
+  console.log("ReactTableWidget table widget");
+
+  //we need a reference to the scrolling element for logic down below
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data, setData] = React.useState(tableWidgetData);
+  const refreshData = () => setData(() => makeData(10, 5, 3));
+  const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
+
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
+
+  const table = useReactTable({
+    data: data || EmptyArray,
+    columns: columns,
+    defaultColumn: DefaultColumn,
+    state: {
+      expanded,
+    },
+    onExpandedChange: setExpanded,
+    getSubRows: (row: any) => row.subRows,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    autoResetPageIndex,
+    // Provide our updateData function to our table meta
+    meta: {
+      updateData: (rowIndex, columnId, value) => {
+        // Skip page index reset until after next rerender
+        skipAutoResetPageIndex();
+        setData((old) =>
+          old.map((row, index) => {
+            if (index === rowIndex) {
+              return {
+                ...old[rowIndex]!,
+                [columnId]: value,
+              };
+            }
+            return row;
+          })
+        );
+      },
+    },
+    debugTable: true,
+  });
+
+  const { rows } = table.getRowModel();
+
+  const rowVirtualizer = useVirtualizer({
+    count: rows.length,
+    estimateSize: () => 33, //estimate row height for accurate scrollbar dragging
+    getScrollElement: () => tableContainerRef.current,
+    //measure dynamic row height, except in firefox because it measures table border height incorrectly
+    measureElement:
+      typeof window !== "undefined" &&
+      navigator.userAgent.indexOf("Firefox") === -1
+        ? (element) => element?.getBoundingClientRect().height
+        : undefined,
+    overscan: 5,
+  });
 
   return (
-    <div className="flex flex-col">
-      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div
+      className="relative h-[600px] min-w-full overflow-x-hidden overflow-y-auto"
+      ref={tableContainerRef}
+    >
+      <div className="flex w-44 gap-2">
+        <Button
+          variant="outlined"
+          size="sm"
+          color="blue"
+          fullWidth
+          className="text-xs px-0"
+          onClick={() => {}}
+        >
+          + Row
+        </Button>
+        <Button
+          variant="outlined"
+          size="sm"
+          color="blue"
+          fullWidth
+          className="text-xs px-0"
+          onClick={() => {}}
+        >
+          + Col
+        </Button>
+        <Button
+          variant="outlined"
+          size="sm"
+          color="green"
+          fullWidth
+          className="text-xs px-0"
+          onClick={() => {}}
+        >
+          Save
+        </Button>
+      </div>
+      <div className="min-w-full overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
           <table className="min-w-full text-left text-sm font-light dark:border-neutral-500 border border-blue-gray-100">
             <thead className="border-b font-medium dark:border-neutral-500">
@@ -117,13 +208,14 @@ const ReactTableWidget = ({ data }: ReactTableWidgetProps) => {
               ))}
             </thead>
             <tbody>
-              {table.getRowModel().rows.map((row) => {
+              {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+                const row = rows[virtualRow.index] as Row<any>;
                 return (
                   <tr
                     key={row.id}
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                   >
-                    {row.getVisibleCells().map((cell) => {
+                    {row.getVisibleCells().map((cell: any) => {
                       return (
                         <td
                           key={cell.id}
@@ -145,6 +237,4 @@ const ReactTableWidget = ({ data }: ReactTableWidgetProps) => {
       </div>
     </div>
   );
-};
-
-export default ReactTableWidget;
+}

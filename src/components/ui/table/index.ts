@@ -1,1 +1,1 @@
-export { default as ReactTableWidget } from "./react-table-widget";
+export { default as ReactTableWidget } from "./memozied-table";

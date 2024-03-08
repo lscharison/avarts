@@ -170,9 +170,9 @@ export function FrameWidget({ data }: FrameWidgetProps) {
           {data.elementType && data.elementType === WidgetElement.MAP && (
             <MapWidget data={data} />
           )}
-          {data.elementType && data.elementType === WidgetElement.TABLE && (
-            <ReactTableWidget data={data} />
-          )}
+          {data.elementType &&
+            data.elementType === WidgetElement.TABLE &&
+            !isEmpty(data) && <ReactTableWidget data={data} />}
           {data.elementType && data.elementType === WidgetElement.TIMELINE && (
             <TimelineComponent data={data} />
           )}

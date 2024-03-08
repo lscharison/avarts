@@ -32,6 +32,10 @@ export type WidgetTableTypes = {
   rows: string[][];
 };
 
+export type WidgetTableDataTypes = {
+  [key: string]: string;
+};
+
 export type WidgetImageTypes = {
   id: string;
   name: string;
@@ -62,7 +66,7 @@ export type WidgetTypes = {
   elementType?: WidgetElement;
   chartType?: string;
   chartData?: Record<string, any>;
-  tableData?: WidgetTableTypes;
+  tableData?: WidgetTableDataTypes[];
 };
 
 export type PageTypes = {

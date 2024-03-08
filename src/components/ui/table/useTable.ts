@@ -12,13 +12,13 @@ import {
 import { findIndex, get, map } from "lodash";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import { makeData, Person } from "./makeData";
-import button from "@material-tailwind/react/theme/components/button";
 
 const useTable = (widgetData: any) => {
   const { tableData = {} } = widgetData || {};
   const tableName = tableData.name;
   const tableColumns = get(tableData, "columns", []);
   const tableRows = get(tableData, "rows", []);
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = React.useMemo<ColumnDef<any>[]>(() => {
     return tableColumns.map((column: string) => ({
@@ -37,17 +37,20 @@ const useTable = (widgetData: any) => {
     }, {});
   });
 
-  const [datat, setData] = React.useState(() => makeData(10, 5, 3));
-  console.log("test data", datat);
   console.log("tableData", tableData);
   console.log("tableColumns", tableColumns);
   console.log("tableRows", tableRows);
   console.log("constructed data", data);
-  const [expanded, setExpanded] = React.useState<ExpandedState>({});
+
   const table = useReactTable({
     data: data || [],
     columns: columns || [],
+    state: {
+      expanded,
+    },
+    getSubRows: (row: any) => row.subRows,
     getCoreRowModel: getCoreRowModel(),
+    debugTable: true,
   });
 
   console.log("table", table);

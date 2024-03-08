@@ -120,6 +120,7 @@ export const EditorMainArea = ({
         return {
           ...layout,
           h: isNaN(h) ? 2 : h,
+          y: isNaN(y) ? Infinity : y,
         };
       });
 
