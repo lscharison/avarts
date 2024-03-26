@@ -1,6 +1,16 @@
 "use client";
 import React, { Component } from "react";
-import { find, get, isEmpty, isEqual, map, merge, orderBy } from "lodash";
+import {
+  find,
+  flatMap,
+  get,
+  groupBy,
+  isEmpty,
+  isEqual,
+  map,
+  merge,
+  orderBy,
+} from "lodash";
 import "../../../../node_modules/react-grid-layout/css/styles.css";
 import "./styles.css";
 
@@ -22,6 +32,7 @@ export interface GridLayoutState {
   mounted: boolean;
   layouts: any;
   allLayouts?: ReactGridLayout.Layouts;
+  cols: { lg: number; md: number; sm: number; xs: number; xxs: number };
 }
 
 export interface GridLayoutProps {
@@ -32,6 +43,7 @@ export interface GridLayoutProps {
   data: GridResponsiveLayoutData;
   onLayoutChange: (layout: any[]) => void;
   allLayouts?: ReactGridLayout.Layouts;
+  width: number;
 }
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -55,6 +67,7 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
       mounted: false,
       layouts: merge({ lg: props.initialLayout }, props.allLayouts, props.data),
       allLayouts: {},
+      cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
     };
 
     this.onBreakpointChange = this.onBreakpointChange.bind(this);
@@ -63,7 +76,6 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
 
   generateDOM() {
     const { data } = this.props;
-    console.log("generateDom data", data);
     return map(data.lg, function (layout, i) {
       return (
         <div
@@ -77,10 +89,38 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
     });
   }
 
+  equalizeWidgetWidths = (layout: ReactGridLayout.Layout[]) => {
+    const sortedLayout = orderBy(layout, ["y", "x"], ["asc", "asc"]);
+    const groupedLayout = groupBy(sortedLayout, "y");
+    const { breakpoint, cols } = this.state;
+    // @ts-ignore
+    const numColumns = cols[breakpoint];
+    for (const key in groupedLayout) {
+      const row = groupedLayout[key];
+      const rowWidth = row.reduce((acc, item) => acc + item.w, 0);
+      const emptyCells = numColumns - rowWidth;
+      const newWidth = Math.floor(emptyCells / row.length);
+      row.forEach((item) => {
+        item.w = item.w + newWidth;
+      });
+    }
+
+    console.log("grouped Layout", groupedLayout);
+    const newLayout = flatMap(groupedLayout, (item) => item);
+    console.log("grouped Layout newLayout", newLayout);
+
+    const getCurrentLayouts = this.state.layouts;
+    if (breakpoint === "md") {
+      this.setState({
+        layouts: { ...getCurrentLayouts, [breakpoint]: newLayout },
+      });
+    }
+  };
+
   onBreakpointChange = (breakpoint: string) => {
-    console.log("onBreakpointChange", breakpoint);
     const prevState = this.state;
     this.setState({
+      ...prevState,
       breakpoint: breakpoint,
       compactType: breakpoint === "lg" ? "vertical" : "horizontal",
     });
@@ -90,23 +130,27 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
     layout: ReactGridLayout.Layout[],
     layouts: ReactGridLayout.Layouts
   ) => {
-    console.log("onLayoutChange", layout);
-    console.log("all-layouts", layouts);
+    // console.log("onLayoutChange", layout);
+    // console.log("all-layouts", layouts);
     // this.props?.onLayoutChange(layout);
     const prevState = this.state;
-    this.setState({ layouts });
+    this.setState({ ...prevState, layouts });
+    const newLayout = layout.map((item) => ({
+      ...item,
+    }));
+    this.equalizeWidgetWidths(newLayout);
   };
 
   render() {
     // console.log("thisprops", this.props);
-    console.log("thispropsthis state", this.state);
+    //  console.log("thispropsthis state", this.state);
     return (
       <div className="flex flex-grow flex-col">
         <div className="flex flex-grow flex-col flex-1">
           <ResponsiveReactGridLayout
             /// {...this.props}
             breakpoints={{ lg: 1280, md: 992, sm: 767, xs: 480, xxs: 0 }}
-            cols={{ lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 }}
+            cols={this.state.cols}
             // @ts-ignore
             layouts={this.state.layouts}
             isBounded={true}
@@ -120,6 +164,7 @@ class GridLayout extends React.Component<GridLayoutProps, GridLayoutState> {
             transformScale={1}
             margin={[10, 10]}
             autoSize={true}
+            width={this.props.width}
             /// measureBeforeMount={true}
           >
             {map(this.props.data.lg, (layout: any) => {

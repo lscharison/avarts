@@ -7,6 +7,7 @@ import { useEditorObserveable } from "@/store";
 import { useEditorPageObserveable } from "@/hooks/useEditorPagesObserveable";
 import { Spinner } from "@material-tailwind/react";
 import { useWindowSize } from "react-use";
+import { useMeasure } from "react-use";
 
 type ViewPageProps = {
   pageId: string;
@@ -17,6 +18,7 @@ export const ViewPage = ({ pageId }: ViewPageProps) => {
   const editorObs$ = useEditorObserveable();
   const pageData = useEditorPageObserveable(pageId) as PageTypes;
   const [isMounted, setIsMounted] = React.useState(false);
+  const [ref, { x, y, width, height, top, right, bottom, left }] = useMeasure();
 
   // const { width, height } = useWindowSize();
 
@@ -69,13 +71,19 @@ export const ViewPage = ({ pageId }: ViewPageProps) => {
   // }, [width, height]);
 
   return (
-    <div className="flex flex-grow" data-testid="view-page-widget-wrapper">
+    <div
+      className="flex flex-grow"
+      data-testid="view-page-widget-wrapper"
+      // @ts-ignore
+      ref={ref}
+    >
       <div className="flex justify-center">{!isMounted && <Spinner />}</div>
       {isMounted && (
         <GridLayout
           data={layoutData}
           onLayoutChange={handleOnLayoutChange}
           allLayouts={pageData?.layouts}
+          width={width}
         />
       )}
     </div>

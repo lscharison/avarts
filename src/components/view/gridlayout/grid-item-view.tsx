@@ -10,14 +10,10 @@ export const GridItemView = ({
   children,
   ...props
 }: any) => {
-  console.log("allGridItemviewProps", props);
   return (
     <div
       key={data.i}
-      className={cn(
-        "flex flex-col flex-grow border-gray-1 border-solid border-2",
-        className
-      )}
+      className={cn("flex flex-1 flex-col", className)}
       data-widgetid={data.i}
       {...props}
     >
