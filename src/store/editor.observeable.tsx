@@ -269,6 +269,94 @@ export const useEditorObserveable = () => {
     setNextState(updatedState);
   };
 
+  // add tab info to pages
+  const addTab = (pageId: string, tabId: string) => {
+    const prevState = editorSubject.getValue();
+    const updatedState = produce(prevState, (draft) => {
+      if (draft.entities.pages[pageId]) {
+        if (!draft.entities.pages[pageId].tabs) {
+          draft.entities.pages[pageId].tabs = [];
+        }
+        const tabTypInfo = {
+          id: tabId,
+          name: "Tab",
+          widgets: [],
+        };
+        draft.entities.pages[pageId].tabs?.push(tabTypInfo);
+      }
+    });
+    setNextState(updatedState);
+  };
+
+  // add tab names to tabs
+  const addTabName = (pageId: string, tabId: string, tabName: string) => {
+    const prevState = editorSubject.getValue();
+    const updatedState = produce(prevState, (draft) => {
+      if (draft.entities.pages[pageId]) {
+        if (draft.entities.pages[pageId].tabs) {
+          const tab = draft.entities.pages[pageId].tabs?.find(
+            (tab) => tab.id === tabId
+          );
+          if (tab) {
+            tab.name = tabName;
+          }
+        }
+      }
+    });
+    setNextState(updatedState);
+  };
+
+  // remove tab names to tabs
+  const removeTabName = (pageId: string, tabId: string) => {
+    const prevState = editorSubject.getValue();
+    const updatedState = produce(prevState, (draft) => {
+      if (draft.entities.pages[pageId]) {
+        if (draft.entities.pages[pageId].tabs) {
+          draft.entities.pages[pageId].tabs?.filter(
+            (ftab) => ftab.id !== tabId
+          );
+        }
+      }
+    });
+    setNextState(updatedState);
+  };
+
+  // add widget to tabs
+  const addTabWidgets = (
+    pageId: string,
+    tabId: string,
+    widgetdata: WidgetTypes
+  ) => {
+    const { id: widgetId } = widgetdata;
+    const prevState = editorSubject.getValue();
+    const updatedState = produce(prevState, (draft) => {
+      if (draft.entities.pages[pageId]) {
+        if (draft.entities.pages[pageId].tabs) {
+          const tab = draft.entities.pages[pageId].tabs?.find(
+            (tab) => tab.id === tabId
+          );
+          if (tab) {
+            // add widget array if it is first one
+            if (!tab.widgets) {
+              tab.widgets = [];
+            }
+            tab.widgets.push(widgetId);
+          }
+        }
+      }
+      // add widget to entities
+      if (!draft.entities.widgets) {
+        draft.entities.widgets = {};
+      }
+      draft.entities.widgets[widgetId] = widgetdata;
+      // add widget to result
+      if (!draft.result.widgets.some((widget) => widget === widgetId)) {
+        draft.result.widgets.push(widgetId);
+      }
+    });
+    setNextState(updatedState);
+  };
+
   const setNextState = (payload: EditorStateTypes) => {
     editorSubject.next(payload);
   };
@@ -293,5 +381,9 @@ export const useEditorObserveable = () => {
     deleteDocument,
     updateLayoutTransformations,
     updatePageLayouts,
+    addTab,
+    addTabName,
+    removeTabName,
+    addTabWidgets,
   };
 };
