@@ -49,8 +49,13 @@ export function AllWidgetsSidebar({ toggleDrawer }: AllWidgetsSidebarProps) {
   }, [currentPage$, pages$]);
 
   const hasWidgets =
-    currentPageInfo$.widgets && currentPageInfo$.widgets.length > 0;
-  const hasTabs = currentPageInfo$.tabs && currentPageInfo$.tabs.length > 0;
+    currentPageInfo$ &&
+    currentPageInfo$.widgets &&
+    currentPageInfo$.widgets.length > 0;
+  const hasTabs =
+    currentPageInfo$ &&
+    currentPageInfo$.tabs &&
+    currentPageInfo$.tabs.length > 0;
 
   React.useEffect(() => {
     const fetchFonts = async () => {
@@ -100,6 +105,7 @@ export function AllWidgetsSidebar({ toggleDrawer }: AllWidgetsSidebarProps) {
 
   const handleOnAddWidget = (widgetType: WidgetEnum) => {
     const pageId = currentPage$.pageId;
+    const tabId = currentPage$.currentTabId;
     if (pageId) {
       const widgetId = v4();
       const widgetdata: WidgetTypes = {
@@ -120,7 +126,7 @@ export function AllWidgetsSidebar({ toggleDrawer }: AllWidgetsSidebarProps) {
         images: [],
         enableElements: false,
       };
-      editor$.addWidget(pageId, widgetdata);
+      editor$.addWidget(pageId, widgetdata, tabId);
       // selected widget id on add
       handleDebounceOnAdd(widgetId, pageId);
     }

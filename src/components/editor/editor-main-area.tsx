@@ -71,8 +71,6 @@ export const EditorMainArea = ({
     return {} as unknown as PageTypes;
   }, [currentPage$, pages$]);
 
-  const isTabView = get(currentPageInfo$, "isTabView", false);
-  const tabNames = get(currentPageInfo$, "tabNames", []);
   const hasTabs = currentPageInfo$.tabs && currentPageInfo$.tabs.length > 0;
 
   console.log("currentPageInfo$", currentPageInfo$);
@@ -193,6 +191,8 @@ export const EditorMainArea = ({
               pageId={currentPage$.pageId || ""}
               onLayoutChange={handleOnLayoutChange}
               allLayoutChange={handleOnAllLayoutChange}
+              currentPage={currentPage$}
+              currentPageInfo={currentPageInfo$}
             />
           )}
         </>

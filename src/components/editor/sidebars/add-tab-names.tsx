@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import {
   useSelectedWidgetRepo,
   useObservable,
@@ -6,17 +7,30 @@ import {
 } from "@/store";
 import { useEditorWidgetObserveable } from "@/hooks/useEditorWidgetsObserveable";
 import { useCurrentWidgetObserveable } from "@/hooks/useCurrentWidgetObserveable";
-import { IconButton, Button } from "@material-tailwind/react";
-import { XCircleIcon } from "@heroicons/react/24/solid";
+import {
+  Typography,
+  IconButton,
+  Switch,
+  Button,
+  Spinner,
+} from "@material-tailwind/react";
+import {
+  CheckCircleIcon,
+  XCircleIcon,
+  ChevronLeftIcon,
+  PlusCircleIcon,
+  TrashIcon,
+} from "@heroicons/react/24/solid";
 import { LabelInput } from "@/components/ui/label-input";
 import { useCurrentPageObserveable } from "@/hooks/useCurrentPageObserveable";
 import { useEditorPagesObserveable } from "@/hooks/useEditorPagesObserveable";
-import { PageTypes } from "@/types/editor.types";
-import { get } from "lodash";
+import { PageTypes, TabTypes } from "@/types/editor.types";
+import { get, isEmpty } from "lodash";
+import { v4 } from "uuid";
 
 export const AddTabNames = () => {
-  const [formData, setFormData] = useState([{ key: "", value: "" }]);
-
+  const [formData, setFormData] = useState<TabTypes[] | null>(null);
+  const [enabled, setEnabled] = useState(true);
   const editorObs$ = useEditorObserveable();
   const currentPage$ = useCurrentPageObserveable();
   const pages$ = useEditorPagesObserveable();
@@ -46,88 +60,133 @@ export const AddTabNames = () => {
   const hasTabs = currentPageInfo$.tabs && currentPageInfo$.tabs.length > 0;
 
   React.useEffect(() => {
-    const data = editorWidgetState?.data || [{ key: "", value: "" }];
+    const data = currentPageInfo$.tabs?.map((tab) => tab);
     setFormData(data as unknown as any);
-  }, [editorWidgetState]);
+  }, [currentPageInfo$]);
 
-  const handleChange = (index: any, key: string, value: string) => {
-    const newFormData = [...formData];
-    newFormData[index] = { ...newFormData[index], [key]: value };
-    setFormData(newFormData);
+  const handleChange = (id: string, value: string) => {
+    const newData =
+      formData &&
+      formData.map((tab, i) => {
+        if (id === tab.id) {
+          return { ...tab, name: value };
+        }
+        return tab;
+      });
+    if (!isEmpty(newData)) {
+      setFormData(newData);
+    }
   };
 
-  const addPair = () => {
-    setFormData([...formData, { key: "", value: "" }]);
+  const add = () => {
+    const pageId = currentPage$.pageId;
+    if (pageId) {
+      const tabId = v4();
+      editorObs$.addTab(pageId, tabId);
+    }
   };
 
-  const removePair = (index: number) => {
-    const newFormData = [...formData];
-    newFormData.splice(index, 1);
-    setFormData(newFormData);
+  const remove = (tabId: string) => {
+    const pageId = currentPage$.pageId;
+    if (pageId) {
+      editorObs$.removeTabName(pageId, tabId);
+    }
   };
 
-  const render = () => {
-    editorObs$.updateWidget(currentWidgetState.widgetId, {
-      ...editorWidgetState,
-      data: [...formData],
-    });
+  const handleOnSave = () => {
+    const pageId = currentPage$.pageId;
+    if (!isEmpty(formData) && pageId) {
+      for (let i = 0; i < formData!.length; i++) {
+        const tab = formData![i];
+        editorObs$.addTabName(pageId, tab.id, tab.name);
+      }
+    }
+  };
+
+  const handleOnRemoveTab = () => {
+    const pageId = currentPage$.pageId;
+    if (pageId) editorObs$.deleteTab(pageId);
   };
 
   return (
-    <div className="max-h-72 overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-900">
-      {hasTabs && tabNames && tabNames.length > 0 && (
-        <>
-          {tabNames.map((name, index) => (
-            <div key={index} className="flex flex-col mb-4">
-              <span>{name}</span>
-            </div>
-          ))}
-        </>
-      )}
-      {formData.map((pair, index) => (
-        <div key={index} className="flex flex-col mb-4">
-          <LabelInput
-            label="Key"
-            placeholder=""
-            value={pair.key}
-            onChange={(value: any) => handleChange(index, "key", value)}
+    <div className="max-h-72 overflow-x-hidden scrollbar-thin pr-3 mt-2">
+      <div className="flex gap-1 px-1 items-center justify-between">
+        <Typography variant="h6" color="blue-gray" className="mr-1">
+          <span>Tabs</span>
+        </Typography>
+        <div className="flex gap-1 items-center justify-between">
+          <IconButton
+            onClick={handleOnRemoveTab}
+            size="sm"
+            color="blue-gray"
+            className="p-0 h-5 w-5"
+            title="remove tab"
+          >
+            <XCircleIcon className="h-4 w-4" />
+          </IconButton>
+          <Switch
+            crossOrigin={"true"}
+            checked={Boolean(enabled)}
+            onChange={(e) => setEnabled(!enabled)}
           />
-
-          <div className="flex my-2 gap-2">
-            <Button
-              variant="outlined"
-              size="sm"
-              color="blue"
-              className="inline-flex items-center gap-2"
-              onClick={render}
-            >
-              Save
-            </Button>
-
-            <Button
-              variant="outlined"
-              size="sm"
-              color="blue"
-              className="inline-flex items-center gap-2"
-              onClick={() => removePair(index)}
-            >
-              Cancel
-            </Button>
-          </div>
         </div>
-      ))}
-
-      <div className="inline-flex overflow-hidden relative justify-between items-center gap-2 my-1 border-dotted border-2 border-gray-300 px-1">
-        <Button
-          variant="text"
-          size="sm"
-          color="blue"
-          className="inline-flex items-center gap-2 text-xs px-0"
-          onClick={addPair}
-        >
-          Add Tab
-        </Button>
       </div>
+      <div className="flex h-[0.5px] w-full bg-gray-300 mb-2" />
+      {enabled && (
+        <motion.div
+          initial={{ height: 0 }}
+          animate={{ height: "auto" }}
+          transition={{ duration: 0.3 }}
+          className="flex flex-col px-1"
+        >
+          <div className="flex flex-col gap-1 my-1 px-1">
+            {formData &&
+              formData.map((tab, index) => (
+                <div key={index} className="flex flex-col mb-2">
+                  <LabelInput
+                    label="Key"
+                    placeholder=""
+                    value={tab.name || ""}
+                    onChange={(value: any) => handleChange(tab.id, value)}
+                  />
+
+                  <div className="flex my-2 gap-2">
+                    <IconButton
+                      onClick={handleOnSave}
+                      size="sm"
+                      color="blue-gray"
+                      className="p-0 h-6 w-6"
+                      title="save"
+                    >
+                      <CheckCircleIcon className="h-4 w-4" />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => remove(tab.id)}
+                      size="sm"
+                      color="red"
+                      className="p-0 h-6 w-6"
+                      title="remove tab"
+                    >
+                      <XCircleIcon className="h-4 w-4" />
+                    </IconButton>
+                  </div>
+                </div>
+              ))}
+
+            <div className="inline-flex overflow-hidden relative justify-between items-center gap-2 my-1 border-dotted border-2 border-gray-300 px-1">
+              <Button
+                variant="text"
+                size="sm"
+                color="blue"
+                className="inline-flex items-center gap-2 text-xs px-0"
+                onClick={add}
+              >
+                Add Tab
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 };
