@@ -34,6 +34,7 @@ import { IconsGalleryViewer } from "@/components/ui/icon-viewer";
 import { ContactCardEdit } from "@/components/ui/contact-card";
 import { VideoPlayer } from "@/components/ui/video-player";
 import { ReactCalendly } from "@/components/ui/calendly";
+import { ReactIFrame } from "@/components/ui/iframe/react-iframe";
 
 export type FrameWidgetProps = {
   data: WidgetTypes;
@@ -222,6 +223,9 @@ export function FrameWidget({ data }: FrameWidgetProps) {
           )}
           {data.elementType && data.elementType === WidgetElement.CALENDLY && (
             <ReactCalendly data={data} />
+          )}
+          {data.elementType && data.elementType === WidgetElement.IFRAME && (
+            <ReactIFrame data={data} />
           )}
         </CardBody>
         {data.captionEnabled && (

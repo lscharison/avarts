@@ -255,10 +255,13 @@ export const FrameWidgetEditorTool = ({
                 <AddContactusSidebar />
               )}
               {widgetElement === WidgetElement.VIDEO && (
-                <AddVideoWidgetSidebar />
+                <AddVideoWidgetSidebar label="Video Source" />
               )}
               {widgetElement === WidgetElement.CALENDLY && (
-                <AddCalendlyWidgetSidebar />
+                <AddVideoWidgetSidebar label="Calendly Source" />
+              )}
+              {widgetElement === WidgetElement.IFRAME && (
+                <AddVideoWidgetSidebar label="Iframe Source" />
               )}
             </div>
             <div className="flex gap-1 my-4 px-1">

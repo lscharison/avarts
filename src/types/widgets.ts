@@ -19,5 +19,6 @@ export enum WidgetElement {
   IFRAME = "IFRAME",
   CONTACT_CARD = "CONTACT_CARD",
   CALENDLY = "CALENDLY",
+  IFRAME = "IFRAME",
   NONE = "NONE",
 }

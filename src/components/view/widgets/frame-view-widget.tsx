@@ -31,6 +31,7 @@ import { ContactCardView } from "@/components/ui/contact-card";
 import { cn } from "@/lib/utils";
 import { VideoPlayer } from "@/components/ui/video-player";
 import { ReactCalendly } from "@/components/ui/calendly";
+import { ReactIFrame } from "@/components/ui/iframe/react-iframe";
 
 export type FrameWidgetProps = {
   data: WidgetTypes;
@@ -147,6 +148,9 @@ export function FrameWidget({ data, height, width }: FrameWidgetProps) {
           )}
           {data.elementType && data.elementType === WidgetElement.CALENDLY && (
             <ReactCalendly data={data} />
+          )}
+          {data.elementType && data.elementType === WidgetElement.IFRAME && (
+            <ReactIFrame data={data} />
           )}
         </CardBody>
         {data.captionEnabled && (

@@ -10,9 +10,13 @@ import { useEditorWidgetObserveable } from "@/hooks/useEditorWidgetsObserveable"
 import { v4 } from "uuid";
 import { debounce, get } from "lodash";
 
-export type AddVideoWidgetSidebarProps = {};
+export type AddVideoWidgetSidebarProps = {
+  label?: string;
+};
 
-export const AddVideoWidgetSidebar = ({}: AddVideoWidgetSidebarProps) => {
+export const AddVideoWidgetSidebar = ({
+  label,
+}: AddVideoWidgetSidebarProps) => {
   // state
   const [url, setUrl] = React.useState<string>("");
   const editorObs$ = useEditorObserveable();
@@ -57,7 +61,7 @@ export const AddVideoWidgetSidebar = ({}: AddVideoWidgetSidebarProps) => {
         <>
           <div className="flex flex-col mb-4">
             <LabelInput
-              label="Video Source"
+              label={label || "Video Source"}
               placeholder=""
               value={url || ""}
               onChange={(value: any) => {
