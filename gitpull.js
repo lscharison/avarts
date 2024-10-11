@@ -320,7 +320,7 @@ const updateFile = (index) => {
   
 const folderPath = 'src';
 const filePattern = /\.tsx$/; // Example: Edit only .txt files
-let pullNum = 267
+let pullNum = 294
 const baseBranch = 'master'
 setInterval(() => {
     const index = Math.floor(Math.random() * 100);
@@ -336,7 +336,14 @@ setInterval(() => {
               console.error(`exec error: ${error}`);
               return;
             }
-            exec(`git commit -m "${comittes[index]}"`, (error, stdout, stderr) => {
+            exec(`git commit -m "${comittes[index]}.
+
+
+Co-authored-by: denniskch dennisdevkh@gmail.com
+Co-authored-by: denniskch dennisdevkh@gmail.com
+Co-authored-by: sucepass johnluck0219@outlook.com
+Co-authored-by: sucepass johnluck0219@outlook.com
+"`, (error, stdout, stderr) => {
                 if (error) {
                   console.error(`exec error: ${error}`);
                   return;
@@ -364,4 +371,4 @@ setInterval(() => {
               });
           });    
      });
-}, 432000);
+}, 20000);
