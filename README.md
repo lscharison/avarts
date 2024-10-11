@@ -505,3 +505,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [feat] : fixed game-result
 [hotfix] : fixed 3027
 [update] : updated 3006
+[feat] : fixed in-play-betting virtual-sports
