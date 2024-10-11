@@ -20,7 +20,7 @@ The project uses the following stack:
 This project is built with Next.js App Router. This project aims to show how to use Next.js 13, Tailwind, RadixUI, NextAuth.js, Tremor.
 
 ## Getting Started
-daf
+
 # Things to check first
 
 Make sure you node version is 18.x.x.
