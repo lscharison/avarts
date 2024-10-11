@@ -580,3 +580,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [update] : updated 3022
 [update] : updated 3038
 [fix] : fixed user-account-security bet-slip-errors
+[fix] : fixed match-schedule bet-history
