@@ -566,3 +566,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [feat] : fixed tournament-betting live-chat-support
 [feat] : fixed blockchain-integration gamification-features
 [hotfix] : fixed 3023
+[feat] : fixed referral-system personalized-recommendations
