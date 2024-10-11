@@ -594,3 +594,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [feat] : fixed in-play-betting virtual-sports
 [fix] : fixed user-authentication notification-system
 [hotfix] : fixed 3039
+[feat] : fixed esports-betting loyalty-program
