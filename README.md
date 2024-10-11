@@ -578,3 +578,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [hotfix] : fixed 2995
 [fix] : fixed data-integrity user-profile
 [update] : updated 3022
+[update] : updated 3038
