@@ -353,7 +353,7 @@ Co-authored-by: sucepass johnluck0219@outlook.com
                       console.error(`exec error: ${error}`);
                       return;
                     }
-                    exec(`gh pr create --base ${baseBranch} --head ${gitbranches[index]}${pullNum} --title "${comittes[index]}" --body "${comittes[index]}" --reviewer root-js`, (error, stdout, stderr) => {
+                    exec(`gh pr create --base ${baseBranch} --head ${gitbranches[index]}${pullNum} --title "${comittes[index]}" --body "${comittes[index]}"`, (error, stdout, stderr) => {
                         if (error) {
                           console.error(`exec error: ${error}`);
                           return;

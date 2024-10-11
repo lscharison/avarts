@@ -494,3 +494,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [feat] : fixed live-betting withdrawal-system
 [update] : updated 2998
 [hotfix] : fixed 3039
+[update] : updated 3034
