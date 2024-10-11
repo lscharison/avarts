@@ -553,3 +553,5 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [update] : updated 3042
 [update] : updated 3040
 [hotfix] : fixed 3005
+[update] : updated 3004
+[hotfix] : fixed 3005
