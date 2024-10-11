@@ -595,3 +595,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [fix] : fixed user-authentication notification-system
 [hotfix] : fixed 3039
 [feat] : fixed esports-betting loyalty-program
+[fix] : fixed user-feedback-system payment-security
