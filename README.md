@@ -586,3 +586,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [feat] : fixed game-result
 [feat] : fixed responsible-gambling statistics-and-analysis
 [update] : updated 3008
+[update] : updated 3024
