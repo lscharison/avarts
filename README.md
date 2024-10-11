@@ -572,3 +572,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [fix] : fixed user-interface-improvements system-stability
 [hotfix] : fixed 3005
 [hotfix] : fixed 3025
+[feat] : fixed artificial-intelligence-predictions social-betting-features
