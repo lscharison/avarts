@@ -559,3 +559,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [hotfix] : fixed 3023
 [fix] : fixed data-integrity user-profile
 [fix] : fixed bet-slip-management user-interface
+[fix] : fixed odds-calculation user-balance
