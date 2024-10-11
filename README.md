@@ -599,3 +599,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [update] : updated 3032
 [fix] : fixed data-integrity user-profile
 [update] : updated 3042
+[feat] : fixed game-result
