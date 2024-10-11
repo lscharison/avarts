@@ -510,3 +510,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [update] : updated 2994
 [update] : updated 3022
 [hotfix] : fixed 3029
+[feat] : fixed mobile-app affiliate-program
