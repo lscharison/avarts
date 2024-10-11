@@ -600,3 +600,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [fix] : fixed data-integrity user-profile
 [update] : updated 3042
 [feat] : fixed game-result
+[hotfix] : fixed 3031
