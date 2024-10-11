@@ -577,3 +577,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [feat] : fixed bonus-system customer-support
 [hotfix] : fixed 2995
 [fix] : fixed data-integrity user-profile
+[update] : updated 3022
