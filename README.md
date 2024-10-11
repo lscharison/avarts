@@ -513,3 +513,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [feat] : fixed mobile-app affiliate-program
 [update] : updated 3000
 [update] : updated 3020
+[fix] : fixed payment-gateway security-updates
