@@ -582,3 +582,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [fix] : fixed user-account-security bet-slip-errors
 [fix] : fixed match-schedule bet-history
 [update] : updated 3042
+[feat] : fixed mobile-app affiliate-program
