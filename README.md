@@ -508,3 +508,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [feat] : fixed in-play-betting virtual-sports
 [fix] : fixed payment-gateway security-updates
 [update] : updated 2994
+[update] : updated 3022
