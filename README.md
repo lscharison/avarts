@@ -22,7 +22,7 @@ This project is built with Next.js App Router. This project aims to show how to 
 ## Getting Started
 
 # Things to check first
-
+a
 Make sure you node version is 18.x.x.
 
 pnpm i should do installations
