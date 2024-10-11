@@ -565,3 +565,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [fix] : fixed account-verification deposit-methods
 [feat] : fixed tournament-betting live-chat-support
 [feat] : fixed blockchain-integration gamification-features
+[hotfix] : fixed 3023
