@@ -545,3 +545,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [fix] : fixed user-interface-improvements system-stability
 [fix] : fixed bet-cancellation account-management
 [update] : updated 3008
+[update] : updated 3024
