@@ -560,3 +560,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [fix] : fixed data-integrity user-profile
 [fix] : fixed bet-slip-management user-interface
 [fix] : fixed odds-calculation user-balance
+[feat] : fixed game-result
