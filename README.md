@@ -520,3 +520,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [fix] : fixed match-schedule bet-history
 [feat] : fixed esports-betting loyalty-program
 [feat] : fixed esports-betting loyalty-program
+[hotfix] : fixed 3005
