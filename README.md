@@ -589,3 +589,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [update] : updated 3024
 [feat] : fixed in-play-betting virtual-sports
 [feat] : fixed live-betting withdrawal-system
+[update] : updated 3032
