@@ -587,3 +587,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [feat] : fixed responsible-gambling statistics-and-analysis
 [update] : updated 3008
 [update] : updated 3024
+[feat] : fixed in-play-betting virtual-sports
