@@ -535,3 +535,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [hotfix] : fixed 3023
 [hotfix] : fixed 3023
 [hotfix] : fixed 3025
+[fix] : fixed system-performance user-experience
