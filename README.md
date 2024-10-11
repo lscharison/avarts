@@ -539,3 +539,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [fix] : fixed payment-gateway security-updates
 [hotfix] : fixed 2993
 [fix] : fixed account-verification deposit-methods
+[hotfix] : fixed 3007
