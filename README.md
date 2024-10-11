@@ -563,3 +563,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [feat] : fixed game-result
 [update] : updated 3022
 [fix] : fixed account-verification deposit-methods
+[feat] : fixed tournament-betting live-chat-support
