@@ -519,3 +519,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [update] : updated 2994
 [fix] : fixed match-schedule bet-history
 [feat] : fixed esports-betting loyalty-program
+[feat] : fixed esports-betting loyalty-program
