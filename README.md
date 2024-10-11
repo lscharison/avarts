@@ -528,3 +528,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [fix] : fixed user-account-security bet-slip-errors
 [hotfix] : fixed 3005
 [update] : updated 3026
+[update] : updated 3020
