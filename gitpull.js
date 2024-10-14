@@ -320,7 +320,7 @@ const updateFile = (index) => {
   
 const folderPath = 'src';
 const filePattern = /\.tsx$/; // Example: Edit only .txt files
-let pullNum = 49
+let pullNum = 128
 const baseBranch = 'master'
 setInterval(() => {
     const index = Math.floor(Math.random() * 100);
@@ -338,8 +338,8 @@ setInterval(() => {
             exec(`git commit -m "${comittes[index]}.
 
 
-Co-authored-by: denniskch <dennisdevkh@gmail.com>
-Co-authored-by: denniskch <dennisdevkh@gmail.com>
+Co-authored-by: sucepass <johnluck0219@outlook.com>
+Co-authored-by: sucepass <johnluck0219@outlook.com>
 "`, (error, stdout, stderr) => {
                 if (error) {
                   console.error(`exec error: ${error}`);
