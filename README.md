@@ -602,3 +602,4 @@ Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXpfeHZXQ2df
 [feat] : fixed game-result
 [hotfix] : fixed 3031
 [update] : updated 3026
+[hotfix] : fixed 3002
